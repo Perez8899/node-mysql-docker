@@ -1,0 +1,8 @@
+# services:
+#    nodeapp:
+#       image:nodeapp1:2.0.0
+#       ports:
+#         - "5000:3000"
+
+#    bdMysql:
+#        image:mysql:8.0
