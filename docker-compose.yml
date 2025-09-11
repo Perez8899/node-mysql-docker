@@ -1,8 +1,38 @@
-# services:
-#    nodeapp:
-#       image:nodeapp1:2.0.0
-#       ports:
-#         - "5000:3000"
+version: '3.9'
+services:
 
-#    bdMysql:
-#        image:mysql:8.0
+#BACK-END
+  backend_node_productos:
+    container_name: backend_node_productos
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3000"
+    depends_on:
+      - base_datos_mysql
+    volumes:
+      - .:/app
+  
+  #BD
+  base_datos_mysql:
+    container_name: base_datos_mysql
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: root1
+      MYSQL_DATABASE: bd_productos
+    ports:
+      - "3332:3306"
+  
+  #MYADMIN
+  servicio_phpmyadmin:
+    container_name: servicio_phpmyadmin
+    image: phpmyadmin
+    environment:
+      PMA_HOST: base_datos_mysql
+      PMA_PORT: 3306
+      MYSQL_ROOT_PASSWORD: root1
+    ports:
+      - "8081:80"
+    depends_on:
+      - base_datos_mysql

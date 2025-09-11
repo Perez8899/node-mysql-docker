@@ -1,13 +1,20 @@
 // importando el framework express
+var cors = require('cors')
 const express = require("express");
+const rutas = require("./router/index");
 
 // iniciando app con express
 const app = express();
+
+// habilitando cors
+app.use(cors())
 
 // renderizar archivos estaticos
 app.use(express.static('public'))
 
 // rutas
+app.use("/api", rutas);
+
 app.get("/saludo", function(req, res){
     return res.json({mensaje: "Hola Mundo este es mi app de Node con Docker Prueba"});
 });

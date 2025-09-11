@@ -9,7 +9,7 @@ COPY package*.json .
 RUN npm install
 
 #copiar al directorio de trabajo
-COPY . .
+COPY ./ .
 
 EXPOSE 3000
 

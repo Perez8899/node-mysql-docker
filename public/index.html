@@ -1,31 +1,52 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chat HTML5</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <div class="chat-container">
-        <div class="chat-header">
-            <h2>Chat en Tiempo Real</h2>
-            <div class="user-info">
-                <input type="text" id="username" placeholder="Tu nombre" maxlength="20">
-                <button onclick="setUsername()">Unirse</button>
-            </div>
-        </div>
-        
-        <div class="chat-messages" id="chatMessages">
-            <!-- Mensajes aparecerán aquí -->
-        </div>
-        
-        <div class="chat-input">
-            <input type="text" id="messageInput" placeholder="Escribe tu mensaje..." disabled>
-            <button onclick="sendMessage()" disabled>Enviar</button>
-        </div>
-    </div>
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
-    <script src="script.js"></script>
-</body>
-</html>
+<div id="app">
+  <table border="1">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>NOMBRE</th>
+        <th>PRECIO</th>
+        <th>IMAGEN</th>
+        <th>ACCION</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr v-for="prod in productos">
+        <td>{{ prod.id }}</td>
+        <td>{{ prod.nombre }}</td>
+        <td>{{ prod.precio }}</td>
+        <td>
+          <img :src="prod.imagen" alt="" width="150px" />
+        </td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  {{ productos }}
+</div>
+
+<script>
+  const { createApp, ref } = Vue;
+
+  createApp({
+    setup() {
+      const productos = ref([
+        { id: 1, nombre: "MONITOR" },
+        { id: 1, nombre: "TECLADO" },
+      ]);
+
+      async function obtenerDatosProductos() {
+        const respuesta = await axios.get("http://127.0.0.1:3001/api/producto");
+
+        productos.value = respuesta.data;
+      }
+
+      obtenerDatosProductos();
+      return {
+        productos,
+      };
+    },
+  }).mount("#app");
+</script>
