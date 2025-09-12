@@ -1,4 +1,5 @@
 // importando el framework express
+require('dotenv').config()
 var cors = require('cors')
 const express = require("express");
 const rutas = require("./router/index");
@@ -8,6 +9,9 @@ const app = express();
 
 // habilitando cors
 app.use(cors())
+
+// habilitando JSON req.body
+app.use(express.json());
 
 // renderizar archivos estaticos
 app.use(express.static('public'))
