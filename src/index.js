@@ -8,7 +8,7 @@ const rutas = require("./router/index");
 const app = express();
 
 // habilitando cors
-app.use(cors())
+app.use(cors());
 
 // habilitando JSON req.body
 app.use(express.json());

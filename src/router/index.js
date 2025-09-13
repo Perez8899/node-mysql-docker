@@ -9,4 +9,4 @@ Route.get("/producto/:id",productoController.mostrar);
 Route.put("/producto/:id",productoController.modificar);
 Route.delete("/producto/:id",productoController.eliminar);
 
-module.exports -= Route;
+module.exports = Route;

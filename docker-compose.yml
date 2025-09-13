@@ -11,19 +11,19 @@ services:
       - base_datos_mysql
     volumes:
       - .:/app
-    networks:
-      - app-node-vue
+    #networks:
+     # - app-node-vue
   
   base_datos_mysql:
     container_name: base_datos_mysql
     image: mysql:latest
     environment:
-      MYSQL_ROOT_PASSWORD: root1
+      MYSQL_ROOT_PASSWORD: root2
       MYSQL_DATABASE: bd_productos
     ports:
       - "3332:3306"
-    networks:
-      - app-node-vue
+    #networks:
+     #- app-node-vue
   
   servicio_phpmyadmin:
     container_name: servicio_phpmyadmin
@@ -31,26 +31,26 @@ services:
     environment:
       PMA_HOST: base_datos_mysql
       PMA_PORT: 3306
-      MYSQL_ROOT_PASSWORD: root1
+      MYSQL_ROOT_PASSWORD: root2
     ports:
       - "8081:80"
     depends_on:
       - base_datos_mysql
-    networks:
-      - app-node-vue
+    #networks:
+     # - app-node-vue
   
-  frontend_vue_productos:
-    container_name: frontend_vue_productos
-    build:
-      context: ./../front-productos-vue
-      dockerfile: Dockerfile
-    ports:
-      - "81:80"
-    depends_on:
-      - backend_node_productos
-    networks:
-      - app-node-vue
+  #frontend_vue_productos:
+   # container_name: frontend_vue_productos
+    #build:
+     # context: ./../front-productos-vue
+      #dockerfile: Dockerfile
+    #ports:
+     # - "81:80"
+    #depends_on:
+      #- backend_node_productos
+    #networks:
+     # - app-node-vue
 
-  networks:
-    app-node-vue:
-    driver: bridge
+  #networks:
+   # app-node-vue:
+    #driver: bridge
