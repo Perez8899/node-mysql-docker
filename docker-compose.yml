@@ -1,19 +1,21 @@
 version: '3.9'
 services:
+#Backend
   backend_node_productos:
     container_name: backend_node_productos
     build:
-      context: ./
-      dockerfile: Dockerfile
+      context: ./  #DIRECTORIO ACTUAL
+      dockerfile: Dockerfile #ARCHIVO QUE SE VA A MANEJAR
     ports:
       - "3001:3000"
     depends_on:
       - base_datos_mysql
     volumes:
       - .:/app
-    #networks:
-     # - app-node-vue
+    networks:
+      - app-node-vue
   
+  #Bd
   base_datos_mysql:
     container_name: base_datos_mysql
     image: mysql:latest
@@ -22,9 +24,10 @@ services:
       MYSQL_DATABASE: bd_productos
     ports:
       - "3332:3306"
-    #networks:
-     #- app-node-vue
+    networks:
+      - app-node-vue
   
+  #phpMyadmin
   servicio_phpmyadmin:
     container_name: servicio_phpmyadmin
     image: phpmyadmin
@@ -36,21 +39,22 @@ services:
       - "8081:80"
     depends_on:
       - base_datos_mysql
-    #networks:
-     # - app-node-vue
+    networks:
+      - app-node-vue
   
-  #frontend_vue_productos:
-   # container_name: frontend_vue_productos
-    #build:
-     # context: ./../front-productos-vue
-      #dockerfile: Dockerfile
-    #ports:
-     # - "81:80"
-    #depends_on:
-      #- backend_node_productos
-    #networks:
-     # - app-node-vue
+  #Front end VUE
+  frontend_vue_productos:
+    container_name: frontend_vue_productos
+    build:
+      context: ./../front-productos-vue
+      dockerfile: Dockerfile
+    ports:
+      - "81:80"
+    depends_on: 
+      - backend_node_productos
+    networks:
+      - app-node-vue
 
-  #networks:
-   # app-node-vue:
-    #driver: bridge
+networks:
+  app-node-vue:
+    driver: bridge 
